@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实用网址导航</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 随机推荐工具提示样式 */
+        .random-tooltip {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--link-hover-bg-color);
+            color: var(--link-hover-text-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            max-width: 80%;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="modeToggle" class="mode-toggle" onclick="toggleDarkMode()">切换至深色模式</button>
+        <header>
+            <div class="time-display">
+                <div id="current-time"></div>
+                <div id="current-date"></div>
+            </div>
+            <h1>实用网址导航</h1>
+            <p>快速访问常用资源</p>
+        </header>
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="输入关键词搜索网站内容"
+                onkeyup="searchWebsites()" 
+            >
+            <button class="random-btn" onClick="getRandomLink()">选择困难？试试随机推荐网址</button>
+        </div>
+        <div class="category">
+            <h2>搜索引擎</h2>
+            <div class="links">
+                <a href="https://www.google.com" target="_blank" class="link-item">
+                    <img src="https://www.google.com/favicon.ico" alt="Google" class="link-icon">
+                    Google
+                </a>
+                <a href="https://www.baidu.com" target="_blank" class="link-item">
+                    <img src="https://www.baidu.com/favicon.ico" alt="百度" class="link-icon">
+                    百度
+                </a>
+                <a href="https://www.bing.com" target="_blank" class="link-item">
+                    <img src="https://www.bing.com/favicon.ico" alt="Bing" class="link-icon">
+                    Bing
+                </a>
+                <a href="https://duckduckgo.com" target="_blank" class="link-item">
+                    <img src="https://duckduckgo.com/favicon.ico" alt="DuckDuckGo" class="link-icon">
+                    DuckDuckGo
+                </a>
+                <a href="https://www.sogou.com" target="_blank" class="link-item">
+                    <img src="https://www.sogou.com/favicon.ico" alt="搜狗搜索" class="link-icon">
+                    搜狗搜索
+                </a>
+                <a href="https://www.so.com" target="_blank" class="link-item">
+                    <img src="https://www.so.com/favicon.ico" alt="360搜索" class="link-icon">
+                    360搜索
+                </a>
+                <a href="https://yandex.com" target="_blank" class="link-item">
+                    <img src="https://yandex.com/favicon.ico" alt="Yandex" class="link-icon">
+                    Yandex
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>音乐平台</h2>
+            <div class="links">
+                <a href="https://music.163.com" target="_blank" class="link-item">
+                    <img src="https://music.163.com/favicon.ico" alt="网易云音乐" class="link-icon">
+                    网易云音乐
+                </a>
+                <a href="https://music.air.moe" target="_blank" class="link-item">
+                    <img src="https://music.air.moe/favicon.ico" alt="Air Music" class="link-icon">
+                    Air Music
+                </a>
+                <a href="https://y.qq.com" target="_blank" class="link-item">
+                    <img src="https://y.qq.com/favicon.ico" alt="QQ音乐" class="link-icon">
+                    QQ音乐
+                </a>
+                <a href="https://www.kugou.com" target="_blank" class="link-item">
+                    <img src="https://www.kugou.com/favicon.ico" alt="酷狗音乐" class="link-icon">
+                    酷狗音乐
+                </a>
+                <a href="https://kuwo.cn" target="_blank" class="link-item">
+                    <img src="https://kuwo.cn/favicon.ico" alt="酷我音乐" class="link-icon">
+                    酷我音乐
+                </a>
+                <a href="https://www.1ting.com" target="_blank" class="link-item">
+                    <img src="https://www.1ting.com/favicon.ico" alt="一听音乐" class="link-icon">
+                    一听音乐
+                </a>
+                <a href="https://music.migu.cn" target="_blank" class="link-item">
+                    <img src="https://music.migu.cn/favicon.ico" alt="咪咕音乐" class="link-icon">
+                    咪咕音乐
+                </a>
+                <a href="https://www.tencentmusic.com" target="_blank" class="link-item">
+                    <img src="https://www.tencentmusic.com/favicon.ico" alt="腾讯音乐" class="link-icon">
+                    腾讯音乐
+                </a>
+                <a href="https://www.qishui.com" target="_blank" class="link-item">
+                    <img src="https://www.qishui.com/favicon.ico" alt="汽水音乐" class="link-icon">
+                    汽水音乐
+                </a>
+                <a href="https://www.ximalaya.com" target="_blank" class="link-item">
+                    <img src="https://www.ximalaya.com/favicon.ico" alt="喜马拉雅" class="link-icon">
+                    喜马拉雅
+                </a>
+            </div>
+        </div>		
+        <div class="category">
+            <h2>邮箱平台</h2>
+            <div class="links">
+                <a href="https://mail.163.com" target="_blank" class="link-item">
+                    <img src="https://mail.163.com/favicon.ico" alt="网易邮箱" class="link-icon">
+                    网易邮箱
+                </a>
+                <a href="https://mail.qq.com" target="_blank" class="link-item">
+                    <img src="https://mail.qq.com/favicon.ico" alt="QQ邮箱" class="link-icon">
+                    QQ邮箱
+                </a>
+                <a href="https://mail.sina.com.cn" target="_blank" class="link-item">
+                    <img src="https://mail.sina.com.cn/favicon.ico" alt="新浪邮箱" class="link-icon">
+                    新浪邮箱
+                </a>
+                <a href="https://mail.sohu.com" target="_blank" class="link-item">
+                    <img src="https://mail.sohu.com/favicon.ico" alt="搜狐邮箱" class="link-icon">
+                    搜狐邮箱
+                </a>
+                <a href="https://126.com" target="_blank" class="link-item">
+                    <img src="https://126.com/favicon.ico" alt="126邮箱" class="link-icon">
+                    126邮箱
+                </a>
+                <a href="https://mail.10086.cn" target="_blank" class="link-item">
+                    <img src="https://mail.10086.cn/favicon.ico" alt="139邮箱" class="link-icon">
+                    139邮箱
+                </a>
+                <a href="https://mail.google.com" target="_blank" class="link-item">
+                    <img src="https://mail.google.com/favicon.ico" alt="Gmail" class="link-icon">
+                    Gmail
+                </a>
+                <a href="https://www.yeah.net" target="_blank" class="link-item">
+                    <img src="https://www.yeah.net/favicon.ico" alt="Yeah邮箱" class="link-icon">
+                    Yeah邮箱
+                </a>
+                <a href="https://www.microsoft.com/zh-cn/microsoft-365/outlook/email-and-calendar-software-microsoft-outlook" target="_blank" class="link-item">
+                    <img src="https://www.microsoft.com/favicon.ico" alt="Outlook" class="link-icon">
+                    Outlook
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>生活服务</h2>
+            <div class="links">
+                <a href="https://www.accuweather.com" target="_blank" class="link-item">
+                    <img src="https://www.accuweather.com/favicon.ico" alt="全球天气" class="link-icon">
+                    全球天气
+                </a>
+                <a href="https://map.baidu.com" target="_blank" class="link-item">
+                    <img src="https://map.baidu.com/favicon.ico" alt="百度地图" class="link-icon">
+                    百度地图
+                </a>
+                <a href="https://www.kuaidi100.com" target="_blank" class="link-item">
+                    <img src="https://www.kuaidi100.com/favicon.ico" alt="查快递" class="link-icon">
+                    查快递
+                </a>
+                <a href="https://www.amap.com" target="_blank" class="link-item">
+                    <img src="https://www.amap.com/favicon.ico" alt="高德地图" class="link-icon">
+                    高德地图
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>游戏与娱乐</h2>
+            <div class="links">
+                <a href="https://minecraft.fandom.com/zh" target="_blank" class="link-item">
+                    <img src="https://minecraft.fandom.com/zh/favicon.ico" alt="Minecraft Wiki Fandom中文网" class="link-icon">
+                    Minecraft Wiki Fandom
+                </a>
+                <a href="https://zh.minecraft.wiki" target="_blank" class="link-item">
+                    <img src="https://zh.minecraft.wiki/favicon.ico" alt="中文Minecraft Wiki" class="link-icon">
+                    Minecraft Wiki
+                </a>
+                <a href="https://se7en.ws" target="_blank" class="link-item">
+                    <img src="https://se7en.ws/favicon.ico" alt="SE7EN.ws" class="link-icon">
+                    SE7EN.ws
+                </a>
+                <a href="https://store.steampowered.com" target="_blank" class="link-item">
+                    <img src="https://store.steampowered.com/favicon.ico" alt="Steam" class="link-icon">
+                    Steam
+                </a>
+                <a href="https://www.mc.js.cool" target="_blank" class="link-item">
+                    <img src="https://www.mc.js.cool/favicon.ico" alt="MC.JS" class="link-icon">
+                    MC.JS
+                </a>
+                <a href="https://www.4399.com" target="_blank" class="link-item">
+                    <img src="https://www.4399.com/favicon.ico" alt="4399小游戏" class="link-icon">
+                    4399小游戏
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>技术社区</h2>
+            <div class="links">
+                <a href="https://github.com" target="_blank" class="link-item">
+                    <img src="https://github.com/favicon.ico" alt="GitHub" class="link-icon">
+                    GitHub
+                </a>
+                <a href="https://stackoverflow.com" target="_blank" class="link-item">
+                    <img src="https://stackoverflow.com/favicon.ico" alt="Stack Overflow" class="link-icon">
+                    Stack Overflow
+                </a>
+                <a href="https://segmentfault.com" target="_blank" class="link-item">
+                    <img src="https://segmentfault.com/favicon.ico" alt="SegmentFault" class="link-icon">
+                    SegmentFault
+                </a>
+                <a href="https://www.csdn.net" target="_blank" class="link-item">
+                    <img src="https://www.csdn.net/favicon.ico" alt="CSDN" class="link-icon">
+                    CSDN
+                </a>
+                <a href="https://www.infoq.cn" target="_blank" class="link-item">
+                    <img src="https://www.infoq.cn/favicon.ico" alt="InfoQ" class="link-icon">
+                    InfoQ
+                </a>
+                <a href="https://www.bytezonex.com" target="_blank" class="link-item">
+                    <img src="https://www.bytezonex.com/favicon.ico" alt="ByteZoneX" class="link-icon">
+                    ByteZoneX
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>学习平台</h2>
+            <div class="links">
+                <a href="https://www.zhihu.com" target="_blank" class="link-item">
+                    <img src="https://www.zhihu.com/favicon.ico" alt="知乎" class="link-icon">
+                    知乎
+                </a>
+                <a href="https://www.coursera.org" target="_blank" class="link-item">
+                    <img src="https://www.coursera.org/favicon.ico" alt="Coursera" class="link-icon">
+                    Coursera
+                </a>
+                <a href="https://www.udemy.com" target="_blank" class="link-item">
+                    <img src="https://www.udemy.com/favicon.ico" alt="Udemy" class="link-icon">
+                    Udemy
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>实用工具</h2>
+            <div class="links">
+                <a href="https://tool.lu" target="_blank" class="link-item">
+                    <img src="https://tool.lu/favicon.ico" alt="在线工具" class="link-icon">
+                    在线工具
+                </a>
+                <a href="https://smallpdf.com" target="_blank" class="link-item">
+                    <img src="https://smallpdf.com/favicon.ico" alt="PDF工具" class="link-icon">
+                    PDF工具
+                </a>
+                <a href="https://remove.bg" target="_blank" class="link-item">
+                    <img src="https://remove.bg/favicon.ico" alt="图片去背景" class="link-icon">
+                    图片去背景
+                </a>
+                <a href="https://snapany.com/zh" target="_blank" class="link-item">
+                    <img src="https://snapany.com/zh/favicon.ico" alt="网站视频解析" class="link-icon">
+                    网站视频解析
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>编程语言</h2>
+            <div class="links">
+                <a href="https://www.python.org" target="_blank" class="link-item">
+                    <img src="https://www.python.org/favicon.ico" alt="Python" class="link-icon">
+                    Python
+                </a>
+                <a href="https://nodejs.org" target="_blank" class="link-item">
+                    <img src="https://nodejs.org/favicon.ico" alt="Node.js" class="link-icon">
+                    Node.js
+                </a>
+                <a href="https://code.visualstudio.com" target="_blank" class="link-item">
+                    <img src="https://code.visualstudio.com/favicon.ico" alt="Visual Studio Code" class="link-icon">
+                    Visual Studio Code
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>视频平台</h2>
+            <div class="links">
+                <a href="https://www.bilibili.com" target="_blank" class="link-item">
+                    <img src="https://www.bilibili.com/favicon.ico" alt="哔哩哔哩" class="link-icon">
+                    哔哩哔哩
+                </a>
+                <a href="https://www.douyin.com" target="_blank" class="link-item">
+                    <img src="https://www.douyin.com/favicon.ico" alt="抖音" class="link-icon">
+                    抖音
+                </a>
+                <a href="https://www.youtube.com" target="_blank" class="link-item">
+                    <img src="https://www.youtube.com/favicon.ico" alt="YouTube" class="link-icon">
+                    YouTube
+                </a>
+                <a href="https://www.xiaohongshu.com" target="_blank" class="link-item">
+                    <img src="https://www.xiaohongshu.com/favicon.ico" alt="小红书" class="link-icon">
+                    小红书
+                </a>
+                <a href="https://www.acfun.cn" target="_blank" class="link-item">
+                    <img src="https://www.acfun.cn/favicon.ico" alt="Acfun" class="link-icon">
+                    Acfun
+                </a>
+                <a href="https://www.mgtv.com" target="_blank" class="link-item">
+                    <img src="https://www.mgtv.com/favicon.ico" alt="芒果TV" class="link-icon">
+                    芒果TV
+                </a>
+                <a href="https://www.iqiyi.com" target="_blank" class="link-item">
+                    <img src="https://www.iqiyi.com/favicon.ico" alt="爱奇艺" class="link-icon">
+                    爱奇艺
+                </a>
+                <a href="https://v.qq.com" target="_blank" class="link-item">
+                    <img src="https://v.qq.com/favicon.ico" alt="腾讯视频" class="link-icon">
+                    腾讯视频
+                </a>
+                <a href="https://www.youku.com" target="_blank" class="link-item">
+                    <img src="https://www.youku.com/favicon.ico" alt="优酷" class="link-icon">
+                    优酷
+                </a>
+                <a href="https://www.cctv.com" target="_blank" class="link-item">
+                    <img src="https://www.cctv.com/favicon.ico" alt="央视频道" class="link-icon">
+                    央视频道
+                </a>
+            </div>
+        </div>
+        <div class="category">
+            <h2>硬件平台</h2>
+            <div class="links">
+                <a href="https://www.intel.com" target="_blank" class="link-item">
+                    <img src="https://www.intel.com/favicon.ico" alt="Intel" class="link-icon">
+                    Intel
+                </a>
+                <a href="https://www.amd.com" target="_blank" class="link-item">
+                    <img src="https://www.amd.com/favicon.ico" alt="AMD" class="link-icon">
+                    AMD
+                </a>
+                <a href="https://www.nvidia.com" target="_blank" class="link-item">
+                    <img src="https://www.nvidia.com/favicon.ico" alt="NVIDIA" class="link-icon">
+                    NVIDIA
+                </a>
+                <a href="https://www.westerndigital.com" target="_blank" class="link-item">
+                    <img src="https://www.westerndigital.com/favicon.ico" alt="西部数据" class="link-icon">
+                    西部数据
+                </a>
+                <a href="https://www.seagate.com" target="_blank" class="link-item">
+                    <img src="https://www.seagate.com/favicon.ico" alt="希捷" class="link-icon">
+                    希捷
+                </a>
+                <a href="https://www.microsoft.com" target="_blank" class="link-item">
+                    <img src="https://www.microsoft.com/favicon.ico" alt="Microsoft" class="link-icon">
+                    Microsoft
+                </a>
+            </div>
+        </div>			
+        <div class="category">
+            <h2>AI工具</h2>
+            <div class="links">
+                <a href="https://www.deepseek.com" target="_blank" class="link-item">
+                    <img src="https://www.deepseek.com/favicon.ico" alt="DeepSeek" class="link-icon">
+                    DeepSeek
+                </a>
+                <a href="https://wenxin.baidu.com" target="_blank" class="link-item">
+                    <img src="https://wenxin.baidu.com/favicon.ico" alt="文心一言" class="link-icon">
+                    文心一言
+                </a>
+                <a href="https://bard.google.com" target="_blank" class="link-item">
+                    <img src="https://bard.google.com/favicon.ico" alt="Google Bard" class="link-icon">
+                    Google Bard
+                </a>
+                <a href="https://qianwen.aliyun.com" target="_blank" class="link-item">
+                    <img src="https://qianwen.aliyun.com/favicon.ico" alt="通义千问" class="link-icon">
+                    通义千问
+                </a>
+                <a href="https://chat.openai.com" target="_blank" class="link-item">
+                    <img src="https://chat.openai.com/favicon.ico" alt="ChatGPT" class="link-icon">
+                    ChatGPT
+                </a>
+                <a href="https://openai.com" target="_blank" class="link-item">
+                    <img src="https://openai.com/favicon.ico" alt="OpenAI" class="link-icon">
+                    OpenAI
+                </a>
+                <a href="https://kimi.moonshot.cn" target="_blank" class="link-item">
+                    <img src="https://kimi.moonshot.cn/favicon.ico" alt="Kimi" class="link-icon">
+                    Kimi
+                </a>
+                <a href="https://www.doubao.com" target="_blank" class="link-item">
+                    <img src="https://www.doubao.com/favicon.ico" alt="豆包" class="link-icon">
+                    豆包
+                </a>
+                <a href="https://xinghuo.xfyun.cn" target="_blank" class="link-item">
+                    <img src="https://xinghuo.xfyun.cn/favicon.ico" alt="讯飞星火" class="link-icon">
+                    讯飞星火
+                </a>
+                <a href="https://ollama.com" target="_blank" class="link-item">
+                    <img src="https://ollama.com/favicon.ico" alt="Ollama" class="link-icon">
+                    Ollama
+                </a>
+            </div>
+        </div>
+        <footer>
+            <p align="center">Copyright 2025 实用网址导航. All Rights Reserved.</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
